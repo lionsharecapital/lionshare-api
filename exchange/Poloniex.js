@@ -1,7 +1,8 @@
 import autobahn     from 'autobahn';
 import EventEmitter from 'events';
 
-import ApiClient from './ApiClient';
+import ApiClient         from './ApiClient';
+import { convertPeriod } from '../utils/period';
 
 const CRYPTO_CURRENCY_PAIRS = [
   'USDT_REP', // Augur
@@ -55,13 +56,11 @@ class Poloniex extends EventEmitter {
     this.websocket.open();
   }
 
-  getPrices = async () => {
+  getPrices = async (period) => {
     let rates = {};
-    let start = new Date();
-    let end = new Date();
-    const period = 7200;
 
-    start.setUTCDate(end.getUTCDate() - 1);
+    let { start, end, granularity } = convertPeriod(period, 'poloniex');
+
     start = start.getTime() / 1000;
     end = end.getTime() / 1000;
 
@@ -74,7 +73,7 @@ class Poloniex extends EventEmitter {
         currencyPair: pair,
         start,
         end,
-        period
+        period: granularity
       });
       for (let rate of data) {
         cryptoRates.push(parseFloat(rate['close']));

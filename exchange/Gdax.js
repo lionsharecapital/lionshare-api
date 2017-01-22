@@ -1,7 +1,9 @@
 import WebSocket             from 'websocket';
 import ReconnectingWebsocket from 'reconnecting-websocket';
 import EventEmitter          from 'events';
-import ApiClient             from './ApiClient';
+
+import ApiClient                from './ApiClient';
+import { convertPeriod, sleep } from '../utils/period';
 
 const CRYPTO_CURRENCY_PAIRS = [
   'BTC-USD', // Bitcoin
@@ -45,13 +47,10 @@ class Gdax extends EventEmitter {
     });
   }
 
-  getPrices = async () => {
+  getPrices = async (period) => {
     let rates = {};
-    let start = new Date();
-    let end = new Date();
-    const granularity = 7200;
+    let { start, end, granularity } = convertPeriod(period, 'gdax');
 
-    start.setUTCDate(end.getUTCDate() - 1);
     start = start.toISOString();
     end = end.toISOString();
 
@@ -70,6 +69,8 @@ class Gdax extends EventEmitter {
         cryptoRates.unshift(parseFloat(rate[4]));
       }
       rates[cryptoCurrency] = cryptoRates;
+      // Wait for 1s to avoid getting rate limited
+      await sleep(1000);
     }
 
     return rates;

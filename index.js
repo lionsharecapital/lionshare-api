@@ -3,11 +3,10 @@ require('./init');
 const http = require('http');
 const WebsocketServer = require('./WebsocketServer').default;
 const app = require('./app').default;
-const UpdateJob = require('./db/UpdateJob').default;
+const UpdateJob = require('./db/UpdateJob');
 
 // Start all the periodic jobs
-const updateJob = new UpdateJob({ period: 60000 });
-updateJob.start();
+UpdateJob.startCacheUpdateJobs();
 
 // Start the http server
 const httpServer = http.createServer(app.callback());
