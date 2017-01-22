@@ -1,0 +1,55 @@
+{
+  "name": "lionshare-api",
+  "version": "0.0.1",
+  "description": "Lionshare API",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "cross-env NODE_ENV=development DEBUG=1 ./node_modules/.bin/nodemon --watch server index.js",
+    "deploy": "git push heroku master"
+  },
+  "engine": {
+    "node": "7.2.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:coinbase/lionshare.git"
+  },
+  "author": "Jori Lallo <jori@coinbase.com>, Ben Jennings <ben@coinbase.com>, Maksim Stepanenko <maksim@coinbase.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/coinbase/lionshare/issues"
+  },
+  "homepage": "https://github.com/coinbase/lionshare#readme",
+  "dependencies": {
+    "autobahn": "^0.11.1",
+    "babel-core": "6.21.0",
+    "babel-plugin-transform-async-to-generator": "^6.16.0",
+    "babel-plugin-transform-class-properties": "^6.19.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
+    "babel-plugin-transform-object-rest-spread": "^6.20.2",
+    "babel-register": "6.18.0",
+    "bluebird": "^3.4.7",
+    "cross-env": "3.1.3",
+    "dotenv": "2.0.0",
+    "http-errors": "1.5.1",
+    "isomorphic-fetch": "2.2.1",
+    "koa": "2.0.0",
+    "koa-bodyparser": "2.3.0",
+    "koa-compress": "1.0.9",
+    "koa-convert": "1.2.0",
+    "koa-helmet": "2.0.0",
+    "koa-logger": "1.3.0",
+    "koa-mount": "2.0.0",
+    "koa-router": "7.0.1",
+    "ms": "0.7.2",
+    "reconnecting-websocket": "^3.0.3",
+    "redis": "^2.6.4",
+    "safestart": "1.1.0",
+    "uws": "^0.12.0",
+    "websocket": "^1.0.24"
+  },
+  "devDependencies": {
+    "nodemon": "1.11.0"
+  }
+}
