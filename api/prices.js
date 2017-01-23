@@ -10,12 +10,14 @@ const exchange = new Exchange();
 
 router.get('/', async (ctx) => {
   try {
-    const redisData = await redis.getAsync('api-prices');
+    const period = ctx.query.period || 'day';
+    const key = `api-prices-${period}`;
+    const redisData = await redis.getAsync(key);
     let prices = JSON.parse(redisData);
 
     if (!prices) {
-      prices = await exchange.getPrices();
-      await redis.setAsync('api-prices', JSON.stringify(prices));
+      prices = await exchange.getPrices(period);
+      await redis.setAsync(key, JSON.stringify(prices));
     }
 
     ctx.body = { data: prices };

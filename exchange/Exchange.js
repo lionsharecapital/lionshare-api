@@ -4,6 +4,7 @@ import Poloniex      from './Poloniex';
 import CoinmarketCap from './CoinmarketCap';
 
 import { cryptoCurrencyMap } from '../utils/prices';
+import { VALID_PERIODS } from '../utils/period';
 import redis from '../db/redis';
 
 class Exchange extends EventEmitter {
@@ -41,11 +42,11 @@ class Exchange extends EventEmitter {
     return marketData;
   }
 
-  getPrices = async () => {
+  getPrices = async (period) => {
     let prices = {};
 
-    const [poloPrices, gdaxPrices] = await Promise.all([this.poloniex.getPrices(),
-                                                        this.gdax.getPrices()]);
+    const [poloPrices, gdaxPrices] = await Promise.all([this.poloniex.getPrices(period),
+                                                        this.gdax.getPrices(period)]);
 
     for (let currency in cryptoCurrencyMap) {
       switch (cryptoCurrencyMap[currency].exchange) {
@@ -76,33 +77,41 @@ class Exchange extends EventEmitter {
   }
 
   updateCacheAndEmit = async (data) => {
-    try {
-      const prices = JSON.parse(await redis.getAsync('api-prices'));
-      if (!prices) return;
+    let emitted = false;
+    for (let period of VALID_PERIODS) {
+      const key = `api-prices-${period}`;
+      try {
+        const prices = JSON.parse(await redis.getAsync(key));
+        if (!prices) return;
 
-      const updatePrices = prices[data.cryptoCurrency];
-      if (!updatePrices) return;
+        const updatePrices = prices[data.cryptoCurrency];
+        if (!updatePrices) return;
 
-      if (updatePrices.slice(-1)[0] !== data.price) {
-        const index = updatePrices.length - 1;
-        console.log(`${data.cryptoCurrency}: ${updatePrices[index]} -> ${data.price}`);
-        updatePrices[index] = data.price;
-        prices[data.cryptoCurrency] = updatePrices;
-        await redis.setAsync('api-prices', JSON.stringify(prices));
-        this.emit('message', data);
+        if (updatePrices.slice(-1)[0] !== data.price) {
+
+          const index = updatePrices.length - 1;
+          console.log(`${data.cryptoCurrency}: ${updatePrices[index]} -> ${data.price}`);
+          updatePrices[index] = data.price;
+          prices[data.cryptoCurrency] = updatePrices;
+          await redis.setAsync(key, JSON.stringify(prices));
+          if (!emitted) {
+            this.emit('message', data);
+            emitted = true;
+          }
+        }
+      } catch (e) {
+        console.log('Websocket cache update failed.');
+        console.log(e);
       }
-    } catch (e) {
-      console.log('Websocket cache update failed.');
-      console.log(e);
     }
   }
 
-  updateAllCache = async () => {
+  updateAllCache = async (period) => {
     try {
-      const [prices, markets] = await Promise.all([this.getPrices(),
+      const [prices, markets] = await Promise.all([this.getPrices(period),
                                                    this.getMarketData()]);
 
-      await redis.setAsync('api-prices', JSON.stringify(prices));
+      await redis.setAsync(`api-prices-${period}`, JSON.stringify(prices));
       await redis.setAsync('api-markets', JSON.stringify(markets));
     } catch (e) {
       console.log('Cache update failed.');
