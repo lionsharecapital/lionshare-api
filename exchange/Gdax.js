@@ -73,7 +73,7 @@ class Gdax extends EventEmitter {
         cryptoRates.unshift(parseFloat(rate[4]));
       }
 
-      if (expected - cryptoRates.length > 5 ||
+      if (expected - cryptoRates.length < 5 ||
           period === 'year' ||
           period === 'hour') {
 
