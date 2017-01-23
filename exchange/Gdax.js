@@ -4,6 +4,7 @@ import EventEmitter          from 'events';
 
 import ApiClient                from './ApiClient';
 import { convertPeriod, sleep } from '../utils/period';
+import redis                    from '../db/redis';
 
 const CRYPTO_CURRENCY_PAIRS = [
   'BTC-USD', // Bitcoin
@@ -38,11 +39,12 @@ class Gdax extends EventEmitter {
       if (data.type === 'match') {
         const cryptoCurrency = data.product_id.split('-')[0];
         const price = parseFloat(data.price);
-
-        this.emit('message', {
-          cryptoCurrency,
-          price
-        });
+        if (price) {
+          this.emit('message', {
+            cryptoCurrency,
+            price
+          });
+        }
       }
     });
   }
@@ -50,6 +52,8 @@ class Gdax extends EventEmitter {
   getPrices = async (period) => {
     let rates = {};
     let { start, end, granularity } = convertPeriod(period, 'gdax');
+
+    const expected = 1 + (end.getTime() - start.getTime()) / (1000 * granularity);
 
     start = start.toISOString();
     end = end.toISOString();
@@ -68,7 +72,22 @@ class Gdax extends EventEmitter {
         // Record the closing price for each interval
         cryptoRates.unshift(parseFloat(rate[4]));
       }
-      rates[cryptoCurrency] = cryptoRates;
+
+      if (Math.abs(cryptoRates.length - expected) < 5 ||
+          period === 'year' ||
+          period === 'hour') {
+
+        rates[cryptoCurrency] = cryptoRates;
+      } else {
+        // Sometimes the API Fails and returns very few data points,
+        // we don't want to update our cache with those values, we will
+        // just return whatever is in cache already.
+        const key = `api-prices-${period}`;
+        const prices = JSON.parse(await redis.getAsync(key));
+        rates[cryptoCurrency] = prices[cryptoCurrency];
+        console.log(`[GDAX - ${cryptoCurrency}] Expected ${expected}, got ${cryptoRates.length}`);
+      }
+
       // Wait for 1s to avoid getting rate limited
       await sleep(1000);
     }
