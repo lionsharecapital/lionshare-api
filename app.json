@@ -1,0 +1,12 @@
+{
+  "name": "Lionshare API",
+  "description": "API for https://lionshare.capital",
+  "repository": "https://github.com/lionsharecapital/lionshare-api",
+  "logo": "https://avatars1.githubusercontent.com/u/25111982",
+  "website": "https://lionshare.capital",
+  "addons": [
+    {
+      "plan": "heroku-redis"
+    }
+  ]
+}
