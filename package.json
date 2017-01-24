@@ -43,6 +43,7 @@
     "koa-mount": "2.0.0",
     "koa-router": "7.0.1",
     "ms": "0.7.2",
+    "now-logs": "^0.0.7",
     "reconnecting-websocket": "^3.0.3",
     "redis": "^2.6.4",
     "safestart": "1.1.0",
