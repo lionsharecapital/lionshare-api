@@ -1,33 +1,3 @@
-/*
-  ```
-  Top 20 from coinmarketcap by market cap (17/1/2017)
-
-  1 Bitcoin  √
-  2	Ethereum √
-  3	Ripple  √
-  4	Litecoin √
-  5	Monero √
-  6	Ethereum Classic √
-  7	Dash √
-  8	MaidSafeCoin √
-  9	Augur √
-  10 Steem √
-  11 NEM √
-     Iconomi x - not on polo
-  12 Factom √
-     Waves x - not on polo
-  13 Dogecoin √
-  14 Zcash √
-     DigixDAO x - not on polo
-  15 Stellar √
-  16 Lisk √
-     Tether x - not on polo
-  17 BitShares √
-  18 ShadowCash √
-  19 GameCredits √
-  20 Ardor √
-  ```
-*/
 const cryptoCurrencyMap = {
   BTC: {
     exchange: 'gdax',
@@ -147,6 +117,30 @@ const cryptoCurrencyMap = {
     exchange: 'poloniex',
     hasNativeCurrency: false,
     pair: 'BTC_ARDR',
+    intermediateCurrency: 'BTC'
+  },
+  DCR: {
+    exchange: 'poloniex',
+    hasNativeCurrency: false,
+    pair: 'BTC_DCR',
+    intermediateCurrency: 'BTC'
+  },
+  SJCX: {
+    exchange: 'poloniex',
+    hasNativeCurrency: false,
+    pair: 'BTC_SJCX',
+    intermediateCurrency: 'BTC'
+  },
+  SC: {
+    exchange: 'poloniex',
+    hasNativeCurrency: false,
+    pair: 'BTC_SC',
+    intermediateCurrency: 'BTC'
+  },
+  IOC: {
+    exchange: 'poloniex',
+    hasNativeCurrency: false,
+    pair: 'BTC_IOC',
     intermediateCurrency: 'BTC'
   },
 };

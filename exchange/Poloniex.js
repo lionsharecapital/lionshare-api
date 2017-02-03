@@ -22,6 +22,10 @@ const CRYPTO_CURRENCY_PAIRS = [
   'BTC_SDC', // Shadowcash
   'BTC_GAME', // GameCredit
   'BTC_ARDR', // Ardor
+  'BTC_DCR', // Decred
+  'BTC_SJCX', // Storjcoin X
+  'BTC_SC', // SiaCoin
+  'BTC_IOC', // IO Digital currency
 ];
 
 const BASE_URL = 'https://poloniex.com/public';
