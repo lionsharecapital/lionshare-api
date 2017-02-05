@@ -6,6 +6,8 @@ import httpErrors from 'http-errors';
 import redis from '../db/redis';
 const router = new Router();
 
+const UPDATE_CACHE_KEY = 'update_cache';
+
 router.get('/', async (ctx) => {
   const {
     v,
@@ -17,8 +19,18 @@ router.get('/', async (ctx) => {
   if (os !== 'darwin') throw httpErrors.BadRequest('Invalid os param');
 
   try {
-    const githubData = await fetch('https://api.github.com/repos/lionsharecapital/lionshare-desktop/releases/latest');
-    const data = await githubData.json();
+    // Cache GitHub response on Redis for a minute at the time
+    let data;
+    let githubCache = await redis.getAsync(UPDATE_CACHE_KEY);
+    if (githubCache) {
+      data = JSON.parse(githubCache);
+    } else {
+      const res = await fetch('https://api.github.com/repos/lionsharecapital/lionshare-desktop/releases/latest');
+      data = await res.json();
+      await redis.setAsync(UPDATE_CACHE_KEY, JSON.stringify(data));
+      await redis.expireAsync(UPDATE_CACHE_KEY, 60);
+    }
+
     const build = data.assets[0];
 
     const version = semver.clean(data.tag_name);
