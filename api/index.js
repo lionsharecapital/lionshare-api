@@ -5,19 +5,15 @@ import httpErrors from 'http-errors';
 
 import prices from './prices';
 import markets from './markets';
+import updates from './updates';
 
 const api = new Koa();
 const router = new Router();
 
 router.use('/prices', prices.routes());
 router.use('/markets', markets.routes());
+router.use('/updates', updates.routes());
 api.use(router.routes());
-
-router.get('/updates', (ctx) => {
-  // Returning 204 as there's no updates just yet
-  ctx.status = 204;
-});
-
 api.use(bodyParser());
 
 // API 404 handler
