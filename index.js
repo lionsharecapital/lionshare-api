@@ -4,7 +4,9 @@ const http = require('http');
 const WebsocketServer = require('./WebsocketServer').default;
 const app = require('./app').default;
 const UpdateJob = require('./db/UpdateJob');
-require('now-logs')(process.env.LOG_KEY);
+if (process.env.LOG_KEY) {
+  require('now-logs')(process.env.LOG_KEY);
+}
 
 // Start all the periodic jobs
 UpdateJob.startCacheUpdateJobs();
