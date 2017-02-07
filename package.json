@@ -4,9 +4,10 @@
   "description": "Lionshare API",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "./node_modules/pm2/bin/pm2 start index.js & yarn logs",
+    "logs": "./node_modules/pm2/bin/pm2 logs index",
     "dev": "cross-env NODE_ENV=development DEBUG=1 ./node_modules/.bin/nodemon --watch server index.js",
-    "deploy": "now -e REDIS_URL=@redis_url -e LOG_URL=@log_key && now alias"
+    "deploy": "now -e REDIS_URL=@redis_url -e LOG_KEY=@log_key && now alias"
   },
   "engine": {
     "node": "7.2.1"
@@ -47,6 +48,7 @@
     "koa-router": "7.0.1",
     "ms": "0.7.2",
     "now-logs": "^0.0.7",
+    "pm2": "^2.4.0",
     "reconnecting-websocket": "^3.0.3",
     "redis": "^2.6.4",
     "safestart": "1.1.0",
