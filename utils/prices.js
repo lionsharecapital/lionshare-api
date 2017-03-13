@@ -143,6 +143,12 @@ const cryptoCurrencyMap = {
     pair: 'BTC_IOC',
     intermediateCurrency: 'BTC'
   },
+  GNT: {
+    exchange: 'poloniex',
+    hasNativeCurrency: false,
+    pair: 'BTC_GNT',
+    intermediateCurrency: 'BTC'
+  },
 };
 
 export { cryptoCurrencyMap };
