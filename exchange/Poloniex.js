@@ -26,6 +26,7 @@ const CRYPTO_CURRENCY_PAIRS = [
   'BTC_SJCX', // Storjcoin X
   'BTC_SC', // SiaCoin
   'BTC_IOC', // IO Digital currency
+  'BTC_GNT', // Golem tokens
 ];
 
 const BASE_URL = 'https://poloniex.com/public';
