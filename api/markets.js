@@ -17,7 +17,11 @@ router.get('/', async (ctx) => {
       await redis.setAsync('api-markets', JSON.stringify(markets));
     }
 
-    ctx.body = { data: markets };
+    const marketCaps = {};
+    for (let symbol in markets) {
+      marketCaps[symbol] = markets[symbol]['marketCap']
+    }
+    ctx.body = { data: marketCaps };
   } catch(e) {
     console.log('Market data API failed');
     console.log(e);

@@ -36,7 +36,12 @@ class Exchange extends EventEmitter {
     const marketData = {};
     const cmcData = await this.coinmarketcap.getMarketData();
     for (let market of cmcData) {
-      marketData[market.symbol] = parseFloat(market.market_cap_usd);
+      marketData[market.symbol] = {
+        'marketCap': parseFloat(market['market_cap_usd']),
+        '24hVolume': parseFloat(market['24h_volume_usd']),
+        'availableSupply': parseFloat(market['available_supply']),
+        'totalSupply': parseFloat(market['total_supply']),
+      };
     }
 
     return marketData;
