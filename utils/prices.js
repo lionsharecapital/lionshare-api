@@ -95,12 +95,6 @@ const cryptoCurrencyMap = {
     pair: 'BTC_DOGE',
     intermediateCurrency: 'BTC'
   },
-  SDC: {
-    exchange: 'poloniex',
-    hasNativeCurrency: false,
-    pair: 'BTC_SDC',
-    intermediateCurrency: 'BTC'
-  },
   BTS: {
     exchange: 'poloniex',
     hasNativeCurrency: false,
@@ -135,12 +129,6 @@ const cryptoCurrencyMap = {
     exchange: 'poloniex',
     hasNativeCurrency: false,
     pair: 'BTC_SC',
-    intermediateCurrency: 'BTC'
-  },
-  IOC: {
-    exchange: 'poloniex',
-    hasNativeCurrency: false,
-    pair: 'BTC_IOC',
     intermediateCurrency: 'BTC'
   },
   GNT: {

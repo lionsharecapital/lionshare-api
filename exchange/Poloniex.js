@@ -19,13 +19,11 @@ const CRYPTO_CURRENCY_PAIRS = [
   'ETH_STEEM', // Steem
   'BTC_DOGE', // Dogecoin
   'BTC_BTS', // BitShares
-  'BTC_SDC', // Shadowcash
   'BTC_GAME', // GameCredit
   'BTC_ARDR', // Ardor
   'BTC_DCR', // Decred
   'BTC_SJCX', // Storjcoin X
   'BTC_SC', // SiaCoin
-  'BTC_IOC', // IO Digital currency
   'BTC_GNT', // Golem tokens
 ];
 
