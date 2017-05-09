@@ -1,6 +1,6 @@
-import Router     from 'koa-router';
+import Router from 'koa-router';
 import httpErrors from 'http-errors';
-import fetch      from 'isomorphic-fetch';
+import fetch from 'isomorphic-fetch';
 
 import Exchange from '../exchange/Exchange';
 import redis from '../db/redis';
@@ -8,7 +8,7 @@ import redis from '../db/redis';
 const router = new Router();
 const exchange = new Exchange();
 
-router.get('/', async (ctx) => {
+router.get('/', async ctx => {
   try {
     const period = ctx.query.period || 'day';
     const key = `api-prices-${period}`;
@@ -21,7 +21,7 @@ router.get('/', async (ctx) => {
     }
 
     ctx.body = { data: prices };
-  } catch(e) {
+  } catch (e) {
     console.log('Prices data API failed');
     console.log(e);
   }

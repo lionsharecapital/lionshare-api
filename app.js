@@ -14,8 +14,8 @@ app.use(
   ratelimit({
     db: redis,
     duration: 60000,
-    errorMessage: 'Please stop hitting us so hard.',
-    id: ctx => ctx.ip,
+    errorMessage: 'Please stop hitting us so hard. Please deploy your own instance of the API',
+    id: ctx => ctx.get('X-Real-IP'),
     headers: {
       remaining: 'Rate-Limit-Remaining',
       reset: 'Rate-Limit-Reset',
