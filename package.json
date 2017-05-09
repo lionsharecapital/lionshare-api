@@ -4,10 +4,9 @@
   "description": "Lionshare API",
   "main": "index.js",
   "scripts": {
-    "start": "./node_modules/pm2/bin/pm2 start index.js & npm run logs",
-    "logs": "./node_modules/pm2/bin/pm2 logs index",
+    "start": "node index.js",
     "dev": "cross-env NODE_ENV=development DEBUG=1 ./node_modules/.bin/nodemon --watch server index.js",
-    "deploy": "now -e REDIS_URL=@redis_url -e LOG_KEY=@log_key && now alias"
+    "deploy": "now -e REDIS_URL=@redis_url && now alias"
   },
   "engine": {
     "node": "7.2.1"
