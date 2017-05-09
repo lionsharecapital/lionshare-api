@@ -35,7 +35,7 @@ ansi-styles@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-2.2.1.tgz#b432dd3358b634cf75e1e4664368240533c1ddbe"
 
-any-promise@^1.1.0:
+any-promise@^1.0.0, any-promise@^1.1.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/any-promise/-/any-promise-1.3.0.tgz#abc6afeedcea52e809cdc0376aed3ce39635d17f"
 
@@ -1511,6 +1511,15 @@ koa-mount@2.0.0:
     debug "*"
     koa-compose "^3.0.0"
 
+koa-ratelimit@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/koa-ratelimit/-/koa-ratelimit-4.0.0.tgz#c126e6f6ae38aaa2fa12c62f4af7759157592f3c"
+  dependencies:
+    debug "^2.2.0"
+    ms "^0.7.1"
+    ratelimiter "^3.0.2"
+    thenify "^3.2.0"
+
 koa-router@7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/koa-router/-/koa-router-7.0.1.tgz#800a61d0a3342d3d1f96d8c688b84ed2a6314d97"
@@ -1765,7 +1774,7 @@ ms@0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.1.tgz#9cd13c03adbff25b65effde7ce864ee952017098"
 
-ms@0.7.2:
+ms@0.7.2, ms@^0.7.1:
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.2.tgz#ae25cf2512b3885a1d95d7f037868d8431124765"
 
@@ -2161,6 +2170,10 @@ randomatic@^1.1.3:
   dependencies:
     is-number "^2.0.2"
     kind-of "^3.0.2"
+
+ratelimiter@^3.0.2:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/ratelimiter/-/ratelimiter-3.0.3.tgz#6dbca58b05422f2a08e224d4ba3a0cfb86c30966"
 
 raw-body@~2.1.2:
   version "2.1.7"
@@ -2561,6 +2574,12 @@ tar@~2.2.1:
     block-stream "*"
     fstream "^1.0.2"
     inherits "2"
+
+thenify@^3.2.0:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/thenify/-/thenify-3.2.1.tgz#251fd1c80aff6e5cf57cb179ab1fcb724269bd11"
+  dependencies:
+    any-promise "^1.0.0"
 
 through@2, through@~2.3, through@~2.3.1:
   version "2.3.8"
