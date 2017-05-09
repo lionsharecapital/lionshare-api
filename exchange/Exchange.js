@@ -95,7 +95,6 @@ class Exchange extends EventEmitter {
         if (updatePrices.slice(-1)[0] !== data.price) {
 
           const index = updatePrices.length - 1;
-          console.log(`${data.cryptoCurrency}: ${updatePrices[index]} -> ${data.price}`);
           updatePrices[index] = data.price;
           prices[data.cryptoCurrency] = updatePrices;
           await redis.setAsync(key, JSON.stringify(prices));

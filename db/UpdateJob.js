@@ -13,9 +13,7 @@ class UpdateJob {
   start = () => {
     this.interval = setInterval(async () => {
       try {
-        console.log(`[${this.period}] Update job is running: ${new Date()}`);
         await this.exchange.updateAllCache(this.period);
-        console.log(`[${this.period}] Update job is done`);
       } catch (e) {
         console.log(`[${this.period}] Update job failed`);
         console.log(e);
