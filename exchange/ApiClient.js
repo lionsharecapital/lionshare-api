@@ -1,4 +1,4 @@
-import _map from 'lodash/map';
+import _map from "lodash/map";
 
 class ApiClient {
   constructor(options = {}) {
@@ -9,19 +9,17 @@ class ApiClient {
     let body;
     let modifiedPath;
 
-    if (method === 'GET' &&
-        data &&
-        Object.keys(data).length !== 0) {
+    if (method === "GET" && data && Object.keys(data).length !== 0) {
       modifiedPath = `${path}?${this.constructQueryString(data)}`;
-    } else if (method === 'POST' || method === 'PUT') {
+    } else if (method === "POST" || method === "PUT") {
       body = JSON.stringify(data);
     }
 
     // Construct headers
     const headers = {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      'User-Agent': 'lionshare',
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "User-Agent": "lionshare",
       ...headersData
     };
 
@@ -33,37 +31,37 @@ class ApiClient {
         method,
         body,
         headers,
-        redirect: 'follow',
+        redirect: "follow"
       })
-      .then((response) => {
-        const json = response.json();
-        statusCode = response.status;
-        statusText = response.statusText;
+        .then(response => {
+          const json = response.json();
+          statusCode = response.status;
+          statusText = response.statusText;
 
-        // Handle successful responses
-        if (response.status >= 200 && response.status < 300) {
-          return json;
-        }
+          // Handle successful responses
+          if (response.status >= 200 && response.status < 300) {
+            return json;
+          }
 
-        return json.then(Promise.reject.bind(Promise));
-      })
-      .then((json) => {
-        resolve(json);
-      })
-      .catch((err) => {
-        reject(err);
-      });
+          return json.then(Promise.reject.bind(Promise));
+        })
+        .then(json => {
+          resolve(json);
+        })
+        .catch(err => {
+          reject(err);
+        });
     });
-  }
+  };
 
   get = (path, data, headers = {}) => {
-    return this.fetch(path, 'GET', data, headers);
-  }
+    return this.fetch(path, "GET", data, headers);
+  };
 
-  constructQueryString = (data) => {
+  constructQueryString = data => {
     return _map(data, (v, k) => {
       return `${encodeURIComponent(k)}=${encodeURIComponent(v)}`;
-    }).join('&');
+    }).join("&");
   };
 }
 

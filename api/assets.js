@@ -1,24 +1,24 @@
-import Router from 'koa-router';
-import fetch  from 'isomorphic-fetch';
+import Router from "koa-router";
+import fetch from "isomorphic-fetch";
 
-import assets from '../utils/assets';
-import Exchange from '../exchange/Exchange';
-import redis from '../db/redis';
+import assets from "../utils/assets";
+import Exchange from "../exchange/Exchange";
+import redis from "../db/redis";
 
 const router = new Router();
 const exchange = new Exchange();
 
-router.get('/', async (ctx) => {
+router.get("/", async ctx => {
   try {
-    const redisMarketData = await redis.getAsync('api-markets');
+    const redisMarketData = await redis.getAsync("api-markets");
     let markets = JSON.parse(redisMarketData);
 
     if (!markets) {
       markets = await exchange.getMarketData();
-      await redis.setAsync('api-markets', JSON.stringify(markets));
+      await redis.setAsync("api-markets", JSON.stringify(markets));
     }
 
-    const period = ctx.query.period || 'day';
+    const period = ctx.query.period || "day";
     const key = `api-prices-${period}`;
     const redisPricesData = await redis.getAsync(key);
     let prices = JSON.parse(redisPricesData);
@@ -38,11 +38,10 @@ router.get('/', async (ctx) => {
     }
 
     ctx.body = { data: assetData };
-  } catch(e) {
-    console.log('Assets data API failed');
+  } catch (e) {
+    console.log("Assets data API failed");
     console.log(e);
   }
-
 });
 
 export default router;
