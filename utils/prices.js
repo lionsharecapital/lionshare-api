@@ -1,142 +1,142 @@
 const cryptoCurrencyMap = {
   BTC: {
-    exchange: 'gdax',
+    exchange: "gdax",
     hasNativeCurrency: true,
-    pair: 'BTC-USD',
+    pair: "BTC-USD",
     intermediateCurrency: null
   },
   ETH: {
-    exchange: 'gdax',
+    exchange: "gdax",
     hasNativeCurrency: true,
-    pair: 'ETH-USD',
+    pair: "ETH-USD",
     intermediateCurrency: null
   },
   LTC: {
-    exchange: 'gdax',
+    exchange: "gdax",
     hasNativeCurrency: true,
-    pair: 'LTC-USD',
+    pair: "LTC-USD",
     intermediateCurrency: null
   },
   REP: {
-    exchange: 'poloniex',
+    exchange: "poloniex",
     hasNativeCurrency: true,
-    pair: 'USDT_REP',
+    pair: "USDT_REP",
     intermediateCurrency: null
   },
   ZEC: {
-    exchange: 'poloniex',
+    exchange: "poloniex",
     hasNativeCurrency: true,
-    pair: 'USDT_ZEC',
+    pair: "USDT_ZEC",
     intermediateCurrency: null
   },
   XMR: {
-    exchange: 'poloniex',
+    exchange: "poloniex",
     hasNativeCurrency: true,
-    pair: 'USDT_XMR',
+    pair: "USDT_XMR",
     intermediateCurrency: null
   },
   ETC: {
-    exchange: 'poloniex',
+    exchange: "poloniex",
     hasNativeCurrency: true,
-    pair: 'USDT_ETC',
+    pair: "USDT_ETC",
     intermediateCurrency: null
   },
   XRP: {
-    exchange: 'poloniex',
+    exchange: "poloniex",
     hasNativeCurrency: true,
-    pair: 'USDT_XRP',
+    pair: "USDT_XRP",
     intermediateCurrency: null
   },
   DASH: {
-    exchange: 'poloniex',
+    exchange: "poloniex",
     hasNativeCurrency: true,
-    pair: 'USDT_DASH',
+    pair: "USDT_DASH",
     intermediateCurrency: null
   },
   STR: {
-    exchange: 'poloniex',
+    exchange: "poloniex",
     hasNativeCurrency: true,
-    pair: 'USDT_STR',
+    pair: "USDT_STR",
     intermediateCurrency: null
   },
   LSK: {
-    exchange: 'poloniex',
+    exchange: "poloniex",
     hasNativeCurrency: false,
-    pair: 'BTC_LSK',
-    intermediateCurrency: 'BTC'
+    pair: "BTC_LSK",
+    intermediateCurrency: "BTC"
   },
   MAID: {
-    exchange: 'poloniex',
+    exchange: "poloniex",
     hasNativeCurrency: false,
-    pair: 'BTC_MAID',
-    intermediateCurrency: 'BTC'
+    pair: "BTC_MAID",
+    intermediateCurrency: "BTC"
   },
   FCT: {
-    exchange: 'poloniex',
+    exchange: "poloniex",
     hasNativeCurrency: false,
-    pair: 'BTC_FCT',
-    intermediateCurrency: 'BTC'
+    pair: "BTC_FCT",
+    intermediateCurrency: "BTC"
   },
   XEM: {
-    exchange: 'poloniex',
+    exchange: "poloniex",
     hasNativeCurrency: false,
-    pair: 'BTC_XEM',
-    intermediateCurrency: 'BTC'
+    pair: "BTC_XEM",
+    intermediateCurrency: "BTC"
   },
   STEEM: {
-    exchange: 'poloniex',
+    exchange: "poloniex",
     hasNativeCurrency: false,
-    pair: 'ETH_STEEM',
-    intermediateCurrency: 'ETH'
+    pair: "ETH_STEEM",
+    intermediateCurrency: "ETH"
   },
   DOGE: {
-    exchange: 'poloniex',
+    exchange: "poloniex",
     hasNativeCurrency: false,
-    pair: 'BTC_DOGE',
-    intermediateCurrency: 'BTC'
+    pair: "BTC_DOGE",
+    intermediateCurrency: "BTC"
   },
   BTS: {
-    exchange: 'poloniex',
+    exchange: "poloniex",
     hasNativeCurrency: false,
-    pair: 'BTC_BTS',
-    intermediateCurrency: 'BTC'
+    pair: "BTC_BTS",
+    intermediateCurrency: "BTC"
   },
   GAME: {
-    exchange: 'poloniex',
+    exchange: "poloniex",
     hasNativeCurrency: false,
-    pair: 'BTC_GAME',
-    intermediateCurrency: 'BTC'
+    pair: "BTC_GAME",
+    intermediateCurrency: "BTC"
   },
   ARDR: {
-    exchange: 'poloniex',
+    exchange: "poloniex",
     hasNativeCurrency: false,
-    pair: 'BTC_ARDR',
-    intermediateCurrency: 'BTC'
+    pair: "BTC_ARDR",
+    intermediateCurrency: "BTC"
   },
   DCR: {
-    exchange: 'poloniex',
+    exchange: "poloniex",
     hasNativeCurrency: false,
-    pair: 'BTC_DCR',
-    intermediateCurrency: 'BTC'
+    pair: "BTC_DCR",
+    intermediateCurrency: "BTC"
   },
   SJCX: {
-    exchange: 'poloniex',
+    exchange: "poloniex",
     hasNativeCurrency: false,
-    pair: 'BTC_SJCX',
-    intermediateCurrency: 'BTC'
+    pair: "BTC_SJCX",
+    intermediateCurrency: "BTC"
   },
   SC: {
-    exchange: 'poloniex',
+    exchange: "poloniex",
     hasNativeCurrency: false,
-    pair: 'BTC_SC',
-    intermediateCurrency: 'BTC'
+    pair: "BTC_SC",
+    intermediateCurrency: "BTC"
   },
   GNT: {
-    exchange: 'poloniex',
+    exchange: "poloniex",
     hasNativeCurrency: false,
-    pair: 'BTC_GNT',
-    intermediateCurrency: 'BTC'
-  },
+    pair: "BTC_GNT",
+    intermediateCurrency: "BTC"
+  }
 };
 
 export { cryptoCurrencyMap };

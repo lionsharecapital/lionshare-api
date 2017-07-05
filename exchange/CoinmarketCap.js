@@ -1,6 +1,6 @@
-import ApiClient from './ApiClient';
+import ApiClient from "./ApiClient";
 
-const BASE_URL = 'https://api.coinmarketcap.com/v1/';
+const BASE_URL = "https://api.coinmarketcap.com/v1/";
 
 class CoinmarketCap {
   constructor() {
@@ -8,9 +8,9 @@ class CoinmarketCap {
   }
 
   getMarketData = async () => {
-    const data = await this.apiClient.get('ticker');
+    const data = await this.apiClient.get("ticker");
     return data;
-  }
+  };
 }
 
 export default CoinmarketCap;

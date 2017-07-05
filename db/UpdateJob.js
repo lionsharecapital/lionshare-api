@@ -1,5 +1,5 @@
-import Exchange from '../exchange/Exchange';
-import { sleep, VALID_PERIODS } from '../utils/period';
+import Exchange from "../exchange/Exchange";
+import { sleep, VALID_PERIODS } from "../utils/period";
 
 const DEFAULT_PERIOD = 60 * 1000;
 
@@ -19,13 +19,13 @@ class UpdateJob {
         console.log(e);
       }
     }, this.jobRunPeriod);
-  }
+  };
 
   stop = () => {
     if (this.interval) {
       clearInterval(this.interval);
     }
-  }
+  };
 }
 
 const startCacheUpdateJobs = async () => {
@@ -33,13 +33,12 @@ const startCacheUpdateJobs = async () => {
   for (let period of VALID_PERIODS) {
     updateJob = new UpdateJob({
       period,
-      jobRunPeriod: 60 * 1000,
+      jobRunPeriod: 60 * 1000
     });
     updateJob.start();
     await sleep(5000);
   }
-}
+};
 
 export { startCacheUpdateJobs };
 export default UpdateJob;
-

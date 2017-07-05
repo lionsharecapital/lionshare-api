@@ -6,7 +6,14 @@
   "scripts": {
     "start": "node index.js",
     "dev": "cross-env NODE_ENV=development DEBUG=1 ./node_modules/.bin/nodemon --watch server index.js",
-    "deploy": "now -e REDIS_URL=@redis_url && now alias"
+    "deploy": "now -e REDIS_URL=@redis_url && now alias",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "engine": {
     "node": "7.2.1"
@@ -58,6 +65,9 @@
     "websocket": "^1.0.24"
   },
   "devDependencies": {
-    "nodemon": "1.11.0"
+    "husky": "^0.14.3",
+    "lint-staged": "^4.0.0",
+    "nodemon": "1.11.0",
+    "prettier": "^1.5.2"
   }
 }
