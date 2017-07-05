@@ -1,11 +1,11 @@
-import EventEmitter  from 'events';
-import Gdax          from './Gdax';
-import Poloniex      from './Poloniex';
-import CoinmarketCap from './CoinmarketCap';
+import EventEmitter from "events";
+import Gdax from "./Gdax";
+import Poloniex from "./Poloniex";
+import CoinmarketCap from "./CoinmarketCap";
 
-import { cryptoCurrencyMap } from '../utils/prices';
-import { VALID_PERIODS } from '../utils/period';
-import redis from '../db/redis';
+import { cryptoCurrencyMap } from "../utils/prices";
+import { VALID_PERIODS } from "../utils/period";
+import redis from "../db/redis";
 
 class Exchange extends EventEmitter {
   constructor() {
@@ -18,47 +18,49 @@ class Exchange extends EventEmitter {
 
   connect = () => {
     this.gdax.connect();
-    this.gdax.on('message', (data) => {
+    this.gdax.on("message", data => {
       this.updateCacheAndEmit(data);
     });
 
     this.poloniex.connect();
-    this.poloniex.on('message', (data) => {
+    this.poloniex.on("message", data => {
       const currency = data.cryptoCurrency;
       if (!cryptoCurrencyMap[currency].hasNativeCurrency) {
         data.price = this.convert(data.price, currency, this.prices);
       }
       this.updateCacheAndEmit(data);
     });
-  }
+  };
 
   getMarketData = async () => {
     const marketData = {};
     const cmcData = await this.coinmarketcap.getMarketData();
     for (let market of cmcData) {
       marketData[market.symbol] = {
-        'marketCap': parseFloat(market['market_cap_usd']),
-        '24hVolume': parseFloat(market['24h_volume_usd']),
-        'availableSupply': parseFloat(market['available_supply']),
-        'totalSupply': parseFloat(market['total_supply']),
+        marketCap: parseFloat(market["market_cap_usd"]),
+        "24hVolume": parseFloat(market["24h_volume_usd"]),
+        availableSupply: parseFloat(market["available_supply"]),
+        totalSupply: parseFloat(market["total_supply"])
       };
     }
 
     return marketData;
-  }
+  };
 
-  getPrices = async (period) => {
+  getPrices = async period => {
     let prices = {};
 
-    const [poloPrices, gdaxPrices] = await Promise.all([this.poloniex.getPrices(period),
-                                                        this.gdax.getPrices(period)]);
+    const [poloPrices, gdaxPrices] = await Promise.all([
+      this.poloniex.getPrices(period),
+      this.gdax.getPrices(period)
+    ]);
 
     for (let currency in cryptoCurrencyMap) {
       switch (cryptoCurrencyMap[currency].exchange) {
-        case 'gdax':
+        case "gdax":
           prices[currency] = gdaxPrices[currency];
           break;
-        case 'poloniex':
+        case "poloniex":
           prices[currency] = poloPrices[currency];
           break;
       }
@@ -70,8 +72,8 @@ class Exchange extends EventEmitter {
       }
 
       const converted = [];
-      prices[currency].forEach((rate) => {
-        converted.push(this.convert(rate, currency, prices))
+      prices[currency].forEach(rate => {
+        converted.push(this.convert(rate, currency, prices));
       });
 
       prices[currency] = converted;
@@ -79,9 +81,9 @@ class Exchange extends EventEmitter {
     this.prices = this.formatPrices(prices);
 
     return this.prices;
-  }
+  };
 
-  updateCacheAndEmit = async (data) => {
+  updateCacheAndEmit = async data => {
     let emitted = false;
     for (let period of VALID_PERIODS) {
       const key = `api-prices-${period}`;
@@ -93,53 +95,54 @@ class Exchange extends EventEmitter {
         if (!updatePrices) return;
 
         if (updatePrices.slice(-1)[0] !== data.price) {
-
           const index = updatePrices.length - 1;
           updatePrices[index] = data.price;
           prices[data.cryptoCurrency] = updatePrices;
           await redis.setAsync(key, JSON.stringify(prices));
           if (!emitted) {
-            this.emit('message', data);
+            this.emit("message", data);
             emitted = true;
           }
         }
       } catch (e) {
-        console.log('Websocket cache update failed.');
+        console.log("Websocket cache update failed.");
         console.log(e);
       }
     }
-  }
+  };
 
-  updateAllCache = async (period) => {
+  updateAllCache = async period => {
     try {
-      const [prices, markets] = await Promise.all([this.getPrices(period),
-                                                   this.getMarketData()]);
+      const [prices, markets] = await Promise.all([
+        this.getPrices(period),
+        this.getMarketData()
+      ]);
 
       await redis.setAsync(`api-prices-${period}`, JSON.stringify(prices));
-      await redis.setAsync('api-markets', JSON.stringify(markets));
+      await redis.setAsync("api-markets", JSON.stringify(markets));
     } catch (e) {
-      console.log('Cache update failed.');
+      console.log("Cache update failed.");
       console.log(e);
     }
-  }
+  };
 
-  formatPrices = (prices) => {
+  formatPrices = prices => {
     for (let currency in prices) {
       let formatted = [];
       for (let rate of prices[currency]) {
         formatted.push(parseFloat(rate));
       }
       prices[currency] = formatted;
-    };
+    }
     return prices;
-  }
+  };
 
   convert = (amount, currency, prices) => {
     const intCurrency = cryptoCurrencyMap[currency].intermediateCurrency;
     // Use the last rate
     const intRate = prices[intCurrency].slice(-1)[0];
     return intRate * amount;
-  }
+  };
 }
 
 export default Exchange;
