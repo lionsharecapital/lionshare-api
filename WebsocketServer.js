@@ -1,3 +1,4 @@
+import _ from "lodash";
 import uws from "uws";
 import Exchange from "./exchange/Exchange";
 
@@ -46,9 +47,12 @@ class WebsocketServer {
 
   start = () => {
     this.exchange.connect();
-    this.exchange.on("message", data => {
-      this.broadcast(JSON.stringify(data));
-    });
+    this.exchange.on(
+      "message",
+      _.throttle(data => {
+        this.broadcast(JSON.stringify(data));
+      }, 1000)
+    );
 
     setInterval(() => {
       // Ping to prevent connections from closing
