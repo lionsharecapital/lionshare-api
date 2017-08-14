@@ -182,6 +182,14 @@ const assets = [
     description: "",
     eli5: "",
     website: ""
+  },
+  {
+    name: "Bitcoin Cash",
+    symbol: "BCH",
+    color: "#FF7300",
+    description: "",
+    eli5: "",
+    website: ""
   }
 ];
 
