@@ -142,6 +142,12 @@ const cryptoCurrencyMap = {
     hasNativeCurrency: false,
     pair: "BTC_BCH",
     intermediateCurrency: "BTC"
+  },
+  ZRX: {
+    exchange: "poloniex",
+    hasNativeCurrency: false,
+    pair: "BTC_ZRX",
+    intermediateCurrency: "BTC"
   }
 };
 
