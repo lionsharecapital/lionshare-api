@@ -190,6 +190,14 @@ const assets = [
     description: "",
     eli5: "",
     website: ""
+  },
+  {
+    name: "0x",
+    symbol: "ZRX",
+    color: "#FFFFFF",
+    description: "",
+    eli5: "",
+    website: ""
   }
 ];
 
