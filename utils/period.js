@@ -1,4 +1,4 @@
-const VALID_PERIODS = ["hour", "day", "week", "month", "year"];
+const VALID_PERIODS = ["day", "week", "month"];
 
 const sleep = ms => {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -13,35 +13,28 @@ const convertPeriod = (period, exchange) => {
 
   const end = new Date();
   let start = new Date();
+  let granularity = 3600; // 1 hour
 
   switch (period) {
-    case "hour":
-      start.setUTCHours(end.getUTCHours() - 1);
-      break;
     case "day":
       start.setUTCDate(end.getUTCDate() - 1);
+      granularity = 3600; // 1 hour
       break;
     case "week":
       start.setUTCDate(end.getUTCDate() - 7);
+      granularity = 21600; // 6 hours
       break;
     case "month":
       start.setUTCMonth(end.getUTCMonth() - 1);
-      break;
-    case "year":
-      start.setUTCFullYear(end.getUTCFullYear() - 1);
+      granularity = 86400; // 1 day
       break;
     default:
       start.setUTCDate(end.getUTCDate() - 1);
   }
 
-  const diff = (end.getTime() - start.getTime()) / 1000;
-  let granularity = diff / 12;
-
   // special cases for poloniex
-  if (period === "week") {
+  if (period === "week" && exchange === "poloniex") {
     granularity = 14400;
-  } else if (period === "month" || period === "year") {
-    granularity = 86400;
   }
 
   return { start, end, granularity };
