@@ -18,11 +18,19 @@ const convertPeriod = (period, exchange) => {
   switch (period) {
     case "day":
       start.setUTCDate(end.getUTCDate() - 1);
-      granularity = 3600; // 1 hour
+      if (exchange === "poloniex") {
+        granularity = 7200; // 2 hours
+      } else {
+        granularity = 3600; // 1 hour
+      }
       break;
     case "week":
       start.setUTCDate(end.getUTCDate() - 7);
-      granularity = 21600; // 6 hours
+      if (exchange === "poloniex") {
+        granularity = 14400; // 4 hours
+      } else {
+        granularity = 21600; // 6 hours
+      }
       break;
     case "month":
       start.setUTCMonth(end.getUTCMonth() - 1);
@@ -30,11 +38,6 @@ const convertPeriod = (period, exchange) => {
       break;
     default:
       start.setUTCDate(end.getUTCDate() - 1);
-  }
-
-  // special cases for poloniex
-  if (period === "week" && exchange === "poloniex") {
-    granularity = 14400;
   }
 
   return { start, end, granularity };
