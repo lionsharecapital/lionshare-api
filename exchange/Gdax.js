@@ -6,11 +6,7 @@ import ApiClient from "./ApiClient";
 import { convertPeriod, sleep } from "../utils/period";
 import redis from "../db/redis";
 
-const CRYPTO_CURRENCY_PAIRS = [
-  "BTC-USD", // Bitcoin
-  "ETH-USD", // Ethereum
-  "LTC-USD" // Litecoin
-];
+const CRYPTO_CURRENCY_PAIRS = [];
 
 const BASE_URL = "https://api.gdax.com";
 const WS_URL = "wss://ws-feed.gdax.com";
@@ -90,7 +86,9 @@ class Gdax extends EventEmitter {
         const prices = JSON.parse(await redis.getAsync(key));
         rates[cryptoCurrency] = prices[cryptoCurrency];
         console.log(
-          `[GDAX - ${cryptoCurrency}] Expected ${expected}, got ${cryptoRates.length}`
+          `[GDAX - ${cryptoCurrency}] Expected ${expected}, got ${
+            cryptoRates.length
+          }`
         );
       }
 
