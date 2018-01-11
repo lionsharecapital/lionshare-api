@@ -17,11 +17,6 @@ class Exchange extends EventEmitter {
   }
 
   connect = () => {
-    this.gdax.connect();
-    this.gdax.on("message", data => {
-      this.updateCacheAndEmit(data);
-    });
-
     this.poloniex.connect();
     this.poloniex.on("message", data => {
       const currency = data.cryptoCurrency;
